@@ -3,10 +3,8 @@
 # a script for Linux/macOS that changes the desktop wallpaper
 # by OWL5053
 
-#not work on FreeBsd/Mac
-#url=$(curl -s -L "https://35photo.pro/genre_99/new/" | sed -ne '/data-src="/{s/.*data-src="\(.*\).*/\1/p;q;}' | sed -r 's/".+//' | sed 's/c1.//' | sed 's/_temp/_main/' | sed 's/sizes\///' | sed 's/_800n//'
-#  genre_98 - Adult only!
-url=$(curl --cookie "nude=true" -s -L "https://35photo.pro/genre_99/new" | grep -o 'data-src="[^"]*"' | cut -d '"' -f 2 | shuf -n1 | sed -r 's/".+//' | sed 's/c1.//' | sed 's/_temp/_main/' | sed 's/sizes\///' | sed 's/_800n//'
+# check genre there: https://35photo.ru/genre/
+url=$(curl --cookie "nude=true" -s -L "https://35photo.pro/genre_${1:-99}/new" | grep -o 'data-src="[^"]*"' | cut -d '"' -f 2 | shuf -n1 | sed -r 's/".+//' | sed 's/c1.//' | sed 's/_temp/_main/' | sed 's/sizes\///' | sed 's/_800n//'
 );
 echo "Downloading: "$url;
 pathimg=$HOME"/Pictures/35photo.jpg";
