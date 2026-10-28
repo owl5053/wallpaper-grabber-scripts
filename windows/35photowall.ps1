@@ -34,7 +34,13 @@ $photoday = $FSO.GetSpecialFolder(2).Path   # 2 = TemporaryFolder
 if ($photoday.Substring($photoday.Length - 1) -ne '\') { $photoday = $photoday + '\' }
 $photoday = $photoday + '35photowall.jpg'
 
-$sUrlRequest = 'https://35photo.pro/genre_99/new'   # also you can set 98 - only 18+ :)
+# Genre: default 99, or pass a number as the first argument (e.g. .\35photowall.ps1 85)
+$genre = 99
+if ($args.Count -ge 1 -and $args[0] -match '^\d+$') {
+    $genre = [int]$args[0]
+}
+
+$sUrlRequest = "https://35photo.pro/genre_$genre/new"   # 98 = only 18+
 
 $oXMLHTTP = New-Object -ComObject WinHttp.WinHttpRequest.5.1
 $oXMLHTTP.Open('GET', $sUrlRequest, $false)
